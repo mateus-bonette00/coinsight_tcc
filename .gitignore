@@ -21,8 +21,6 @@ ENV/
 *.json
 *.xlsx
 *.db
-data/
-models/
 *.h5
 
 # System files
