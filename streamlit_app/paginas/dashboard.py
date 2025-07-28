@@ -22,9 +22,9 @@ def show():
                 font-family: 'Inter', sans-serif !important;
             }
             .gradient-title {
-                font-size: 65px !important;
+                font-size: 85px !important;
                 font-weight: 800 !important;
-                background: linear-gradient(90deg, #00E1D4 0%, #3A80F6 30%, #6A5BFF 60%, #C64BD9 100%) !important;
+                background: linear-gradient(90deg, #00E1D4 0%, #3A80F6 30%, #C64BD9 50%) !important;
                 -webkit-background-clip: text !important;
                 -webkit-text-fill-color: transparent !important;
                 margin: 0   !important;
