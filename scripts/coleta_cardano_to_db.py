@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 ID_CARDANO = 3  # No seu print, ADA está com id = 3
 
 # Conexão com o banco
-engine = create_engine('postgresql+psycopg2://coinsight_user:papabento123@localhost:5432/coinsight')
+engine = create_engine('postgresql+psycopg2://postgres:postgres@localhost:5432/coinsight')
 
 # Baixa dados históricos da Cardano
 df = yf.download('ADA-USD', start='2017-10-01', group_by=None)  # Cardano só tem histórico a partir de 2017

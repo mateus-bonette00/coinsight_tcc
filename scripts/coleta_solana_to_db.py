@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 from sqlalchemy import create_engine
 
-engine = create_engine('postgresql+psycopg2://coinsight_user:papabento123@localhost:5432/coinsight')
+engine = create_engine('postgresql+psycopg2://postgres:postgres@localhost:5432/coinsight')
 
 df = yf.download('SOL-USD', start='2020-01-01', group_by=None)  # Solana só tem histórico desde 2020
 df = df.reset_index()

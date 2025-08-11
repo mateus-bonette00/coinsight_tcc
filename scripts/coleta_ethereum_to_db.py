@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 ID_ETHEREUM = 2  # No seu banco, ETH tem id 2
 
 # Conexão
-engine = create_engine('postgresql+psycopg2://coinsight_user:papabento123@localhost:5432/coinsight')
+engine = create_engine('postgresql+psycopg2://postgres:postgres@localhost:5432/coinsight')
 
 # Baixa os dados da Ethereum
 df = yf.download('ETH-USD', start='2014-01-01', group_by=None)
