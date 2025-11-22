@@ -5,14 +5,14 @@ from paginas import (
     dashboard,
     analise_moedas,
     eventos_geopoliticos,
-    sentimento_social,
     previsoes_ia,
     alertas,
+    ml_dashboard,  # ⭐ NOVA PÁGINA
+    ml_avancado,   # 🚀 ML AVANÇADO TCC
 )
 
 # Configuração da página
-st.set_page_config(layout="wide", page_title="CoinSight", page_icon=":crystal_ball:")
-
+st.set_page_config(layout="wide", page_title="CoinSight", page_icon="🔮")
 
 st.markdown("""
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -28,8 +28,8 @@ st.markdown("""
     }
 
     .logo-wrapper {
-        display: flex   !important; 
-        justify-content: center  !important;
+        display: flex !important; 
+        justify-content: center !important;
         align-items: center !important;
         padding: 10px 0;
     }
@@ -54,7 +54,10 @@ LOGO_PATH = os.path.join(IMG_DIR, "logo-coinsight.png")
 with st.sidebar:
     # Usa st.image() dentro de um container centralizado
     st.markdown('<div class="logo-wrapper">', unsafe_allow_html=True)
-    st.image(LOGO_PATH, use_container_width=False, width=185)
+    if os.path.exists(LOGO_PATH):
+        st.image(LOGO_PATH, use_container_width=False, width=185)
+    else:
+        st.markdown("### 🔮 CoinSight")
     st.markdown('</div>', unsafe_allow_html=True)
 
     selected = option_menu(
@@ -63,16 +66,18 @@ with st.sidebar:
             "Dashboard",
             "Análise por Moedas",
             "Eventos Geopolíticos",
-            "Sentimento Social",
             "Previsões IA",
+            "🤖 ML Dashboard",  # ⭐ NOVA OPÇÃO
+            "🚀 ML Avançado TCC",  # 🚀 ML AVANÇADO
             "Alertas",
         ],
         icons=[
             "bar-chart-line",
             "currency-bitcoin",
             "globe",
-            "chat-dots",
             "funnel",
+            "robot",  # ⭐ NOVO ÍCONE
+            "rocket-takeoff",  # 🚀 NOVO ÍCONE
             "bell"
         ],
         default_index=0,
@@ -103,8 +108,9 @@ page_router = {
     "Dashboard": dashboard,
     "Análise por Moedas": analise_moedas,
     "Eventos Geopolíticos": eventos_geopoliticos,
-    "Sentimento Social": sentimento_social,
     "Previsões IA": previsoes_ia,
+    "🤖 ML Dashboard": ml_dashboard,  # ⭐ NOVA ROTA
+    "🚀 ML Avançado TCC": ml_avancado,  # 🚀 ML AVANÇADO TCC
     "Alertas": alertas,
 }
 

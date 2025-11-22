@@ -190,7 +190,7 @@ def show():
         sent = colf3.multiselect("Sentimento", ["Positivo","Neutro","Negativo"])
         moedas = colf4.multiselect("Moedas", sorted({m for lst in df["moedas"].tolist() for m in lst}))
         cold1, cold2 = st.columns(2)
-        dt_ini = cold1.date_input("De", value=(pd.Timestamp.utcnow()-pd.Timedelta(days=30)).date())
+        dt_ini = cold1.date_input("De", value=(pd.Timestamp.utcnow()-pd.Timedelta(days=365)).date())
         dt_fim = cold2.date_input("Até", value=pd.Timestamp.utcnow().date())
 
     # ---- filtros ----
@@ -227,23 +227,22 @@ def show():
     if moedas: extras += moedas
 
     st.markdown("---")
-    # paginas/eventos_geopoliticos.py
-    mostrar_noticias_geopoliticas(
-        max_articles=12,
-        termos_extra=extras,
-        lang=None,                 # usa PT+EN por padrão (definido no componente)
-        categoria=categoria,
-        paises=pais,
-        moedas=moedas,
-        busca_texto=q,
-        layout_cols=2,
-        titulo="📰 Notícias Geopolíticas (PT/EN, últimas 72h)",
-        escopo="geopolitica",
-        provedores=("gdelt","gnews")  # GDELT primeiro para geopolítica
-    )
 
+    # Estatísticas dos eventos
+    if not work.empty:
+        col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
 
+        positivos = len(work[work["sentimento"] == "Positivo"])
+        negativos = len(work[work["sentimento"] == "Negativo"])
+        neutros = len(work[work["sentimento"] == "Neutro"])
+        impacto_medio = work["impacto_pct"].mean() if "impacto_pct" in work.columns else 0
 
+        col_stat1.metric("Total de Eventos", len(work))
+        col_stat2.metric("Positivos", f"{positivos} ({positivos/len(work)*100:.0f}%)" if len(work) > 0 else "0")
+        col_stat3.metric("Negativos", f"{negativos} ({negativos/len(work)*100:.0f}%)" if len(work) > 0 else "0")
+        col_stat4.metric("Impacto Médio", f"{impacto_medio:+.1f}%" if pd.notna(impacto_medio) else "—")
+
+        st.markdown("---")
 
 
 

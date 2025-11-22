@@ -256,12 +256,40 @@ def show():
             st.plotly_chart(fig_v, use_container_width=True)
 
     with col_ai:
-        st.markdown("""
+        # Previsões simples baseadas em tendência
+        precos_recentes = ohlc["close"].tail(20)
+        preco_atual = float(last["close"])
+
+        # Tendência 1h (baseada em últimas 3 barras)
+        if len(ohlc) >= 3:
+            trend_1h = (ohlc["close"].iloc[-1] - ohlc["close"].iloc[-3]) / ohlc["close"].iloc[-3] * 100
+            prev_1h = preco_atual * (1 + trend_1h/100)
+        else:
+            prev_1h = preco_atual
+
+        # Tendência 24h (baseada em média móvel)
+        if len(precos_recentes) >= 7:
+            ma_7 = precos_recentes.tail(7).mean()
+            trend_24h = (preco_atual - ma_7) / ma_7 * 100
+            prev_24h = preco_atual * (1 + trend_24h/100)
+        else:
+            prev_24h = preco_atual
+
+        # Tendência 7d (baseada em média móvel longa)
+        if len(ohlc) >= 20:
+            ma_20 = ohlc["close"].tail(20).mean()
+            trend_7d = (preco_atual - ma_20) / ma_20 * 100
+            prev_7d = preco_atual * (1 + trend_7d * 0.5)
+        else:
+            prev_7d = preco_atual
+
+        st.markdown(f"""
             <div style="background-color: #141923; padding: 25px; border-radius: 15px;">
                 <h4 style="color:#9db1cb;">Previsões</h4>
-                <p><b>1h:</b> Em breve</p>
-                <p><b>24h:</b> Em breve</p>
-                <p><b>7d:</b> Em breve</p>
+                <p><b>1h:</b> <span style="color:{'#31fc94' if prev_1h >= preco_atual else '#ff6f6f'};">${prev_1h:,.2f}</span></p>
+                <p><b>24h:</b> <span style="color:{'#31fc94' if prev_24h >= preco_atual else '#ff6f6f'};">${prev_24h:,.2f}</span></p>
+                <p><b>7d:</b> <span style="color:{'#31fc94' if prev_7d >= preco_atual else '#ff6f6f'};">${prev_7d:,.2f}</span></p>
+                <p style="font-size:11px;color:#7c7f82;margin-top:10px;">⚠️ Previsões baseadas em tendência</p>
             </div>
         """, unsafe_allow_html=True)
 

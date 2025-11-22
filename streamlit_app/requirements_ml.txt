@@ -1,0 +1,34 @@
+# Adicione estas linhas ao seu requirements.txt existente
+# ou instale com: pip install -r requirements_ml.txt
+
+# Machine Learning Core
+scikit-learn==1.5.2
+xgboost==2.1.3
+lightgbm==4.5.0
+
+# Deep Learning (opcional - remove se não quiser LSTM)
+tensorflow==2.19.0
+
+# Análise e Manipulação de Dados
+numpy==1.26.4
+pandas==2.3.1
+scipy==1.16.0
+
+# Persistência de Modelos
+joblib==1.5.1
+
+# Análise de Sentimento
+vaderSentiment==3.3.2
+
+# Utilitários
+python-dotenv==1.1.1
+tqdm==4.67.1
+
+# Já existentes no seu projeto (manter versões)
+streamlit==1.48.0
+plotly==5.24.1
+sqlalchemy==2.0.41
+psycopg2-binary==2.9.10
+yfinance==0.2.65
+requests==2.32.4
+beautifulsoup4==4.13.4
