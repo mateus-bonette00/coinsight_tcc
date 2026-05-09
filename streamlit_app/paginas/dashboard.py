@@ -9,6 +9,13 @@ from datetime import timedelta
 from componentes.noticias import mostrar_noticias_geopoliticas
 from componentes.feed_social import mostrar_feed_social
 
+COINS_MAP = {
+    1: ("BTC", "Bitcoin"),
+    2: ("ETH", "Ethereum"),
+    3: ("ADA", "Cardano"),
+    4: ("SOL", "Solana"),
+}
+
 # ========= conexão =========
 @st.cache_resource(show_spinner=False)
 def get_engine():
@@ -16,6 +23,28 @@ def get_engine():
     if not url:
         url = "postgresql+psycopg2://postgres:postgres@localhost:5432/coinsight"
     return create_engine(url, pool_pre_ping=True)
+
+def _garantir_moedas(_engine):
+    with _engine.begin() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS moedas(
+              id      INTEGER PRIMARY KEY,
+              simbolo TEXT,
+              nome    TEXT,
+              ativo   BOOLEAN DEFAULT TRUE
+            );
+        """))
+        values_sql = ",".join(f"(:id{i}, :sym{i}, :name{i}, TRUE)" for i in COINS_MAP)
+        params = {}
+        for i, (sym, name) in COINS_MAP.items():
+            params[f"id{i}"] = i
+            params[f"sym{i}"] = sym
+            params[f"name{i}"] = name
+        conn.execute(text(f"""
+            INSERT INTO moedas (id, simbolo, nome, ativo) VALUES {values_sql}
+            ON CONFLICT (id) DO UPDATE
+              SET simbolo=EXCLUDED.simbolo, nome=EXCLUDED.nome, ativo=TRUE;
+        """), params)
 
 def _coluna_existe(_engine, tabela: str, coluna: str) -> bool:
     q = text("""
@@ -105,6 +134,7 @@ def show():
     """, unsafe_allow_html=True)
 
     engine = get_engine()
+    _garantir_moedas(engine)
 
     # ====== moedas ======
     moedas_df = listar_moedas(engine)
