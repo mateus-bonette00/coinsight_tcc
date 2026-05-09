@@ -12,7 +12,7 @@ from paginas import (
 )
 
 # Configuração da página
-st.set_page_config(layout="wide", page_title="CoinSight", page_icon="🔮")
+st.set_page_config(layout="wide", page_title="CoinSight", page_icon="./img/logo-coinsight.png")
 
 st.markdown("""
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -57,7 +57,7 @@ with st.sidebar:
     if os.path.exists(LOGO_PATH):
         st.image(LOGO_PATH, use_container_width=False, width=185)
     else:
-        st.markdown("### 🔮 CoinSight")
+        st.markdown("### CoinSight")
     st.markdown('</div>', unsafe_allow_html=True)
 
     selected = option_menu(
@@ -67,17 +67,17 @@ with st.sidebar:
             "Análise por Moedas",
             "Eventos Geopolíticos",
             "Previsões IA",
-            "🤖 ML Dashboard",  # ⭐ NOVA OPÇÃO
-            "🚀 ML Avançado TCC",  # 🚀 ML AVANÇADO
+            "ML Dashboard",
+            "ML Avançado TCC",
             "Alertas",
         ],
         icons=[
             "bar-chart-line",
             "currency-bitcoin",
             "globe",
-            "funnel",
-            "robot",  # ⭐ NOVO ÍCONE
-            "rocket-takeoff",  # 🚀 NOVO ÍCONE
+            "graph-up-arrow",
+            "robot",
+            "cpu",
             "bell"
         ],
         default_index=0,
@@ -109,8 +109,8 @@ page_router = {
     "Análise por Moedas": analise_moedas,
     "Eventos Geopolíticos": eventos_geopoliticos,
     "Previsões IA": previsoes_ia,
-    "🤖 ML Dashboard": ml_dashboard,  # ⭐ NOVA ROTA
-    "🚀 ML Avançado TCC": ml_avancado,  # 🚀 ML AVANÇADO TCC
+    "ML Dashboard": ml_dashboard,
+    "ML Avançado TCC": ml_avancado,
     "Alertas": alertas,
 }
 

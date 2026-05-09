@@ -67,7 +67,7 @@ def show():
           <h1 style="margin:0;
               background: linear-gradient(90deg, #00E1D4, #3A80F6, #C64BD9);
               -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-              font-weight:800; font-size:48px;">🤖 Dashboard de Inteligência Artificial</h1>
+              font-weight:800; font-size:48px;">Dashboard de Inteligência Artificial</h1>
           <p style="color:#9db1cb;margin:6px 0 0 0;font-size:16px;">
             Comparação de Modelos, Backtesting e Análise Geopolítica
           </p>
@@ -77,7 +77,7 @@ def show():
     engine = get_engine()
     
     # Sidebar: Configurações
-    st.sidebar.markdown("### ⚙️ Configurações")
+    st.sidebar.markdown("### Configurações")
     
     moedas = {
         "BTC (Bitcoin)": 1,
@@ -96,23 +96,23 @@ def show():
     
     # Tabs principais
     tab1, tab2, tab3, tab4 = st.tabs([
-        "📊 Comparação de Modelos", 
-        "📈 Backtesting", 
-        "🌍 Impacto Geopolítico",
-        "🎯 Previsão ao Vivo"
+        "Comparação de Modelos",
+        "Backtesting",
+        "Impacto Geopolítico",
+        "Previsão ao Vivo"
     ])
     
     # ========== TAB 1: COMPARAÇÃO DE MODELOS ==========
     with tab1:
-        st.markdown("### 🔍 Treinamento e Comparação de Modelos")
+        st.markdown("### Treinamento e Comparação de Modelos")
         
         col1, col2 = st.columns([2, 1])
         
         with col1:
-            st.info("💡 **Dica:** Treine múltiplos modelos para comparar performance. O sistema usa validação temporal rigorosa (sem data leakage).")
+            st.info("**Dica:** Treine múltiplos modelos para comparar performance. O sistema usa validação temporal rigorosa (sem data leakage).")
         
         with col2:
-            if st.button("🚀 Treinar Todos os Modelos", use_container_width=True):
+            if st.button("Treinar Todos os Modelos", use_container_width=True):
                 with st.spinner("Carregando dados..."):
                     df_prices = load_price_data(engine, moeda_id, limit=2000)
                 
@@ -125,7 +125,7 @@ def show():
                 status_text = st.empty()
                 
                 # Feature Engineering
-                status_text.text("🔧 Criando features...")
+                status_text.text("Criando features...")
                 progress_bar.progress(10)
                 
                 fe = FeatureEngine()
@@ -133,7 +133,7 @@ def show():
                 df_with_target, target = fe.create_target(df_features, horizon=1, target_type=task)
                 
                 # Split temporal
-                status_text.text("📊 Dividindo dados temporalmente...")
+                status_text.text("Dividindo dados temporalmente...")
                 progress_bar.progress(20)
                 
                 X_train, X_val, X_test, y_train, y_val, y_test = prepare_train_test_split(
@@ -151,7 +151,7 @@ def show():
                 st.session_state['df_prices'] = df_prices
                 
                 # Treina modelos
-                status_text.text("🤖 Treinando modelos de IA...")
+                status_text.text("Treinando modelos de IA...")
                 progress_bar.progress(30)
                 
                 comparator = ModelComparator(task=task)
@@ -180,13 +180,13 @@ def show():
                 st.session_state['results'] = results
                 
                 progress_bar.progress(100)
-                status_text.text("✅ Concluído!")
-                st.success("🎉 Treinamento concluído com sucesso!")
+                status_text.text("Concluído!")
+                st.success("Treinamento concluído com sucesso!")
         
         # Mostra resultados se já treinados
         if 'results' in st.session_state and not st.session_state['results'].empty:
             st.markdown("---")
-            st.markdown("### 📊 Resultados da Comparação")
+            st.markdown("### Resultados da Comparação")
             
             results = st.session_state['results']
             
@@ -270,7 +270,7 @@ def show():
                     st.plotly_chart(fig, use_container_width=True)
             
             # Feature Importance
-            st.markdown("### 🎯 Features Mais Importantes")
+            st.markdown("### Features Mais Importantes")
             
             comparator = st.session_state['comparator']
             best_model_name = results['mae'].idxmin() if task == 'regression' else results['f1'].idxmax()
@@ -297,12 +297,12 @@ def show():
     
     # ========== TAB 2: BACKTESTING ==========
     with tab2:
-        st.markdown("### 📈 Backtesting: Validação Histórica")
+        st.markdown("### Backtesting: Validação Histórica")
         
         if 'comparator' not in st.session_state:
-            st.warning("⚠️ Treine os modelos primeiro na aba 'Comparação de Modelos'")
+            st.warning("Treine os modelos primeiro na aba 'Comparação de Modelos'")
         else:
-            st.info("💡 **O que é Backtesting?** Testamos o modelo em dados passados para ver se as previsões teriam sido lucrativas.")
+            st.info("**O que é Backtesting?** Testamos o modelo em dados passados para ver se as previsões teriam sido lucrativas.")
             
             col1, col2, col3 = st.columns(3)
             
@@ -316,7 +316,7 @@ def show():
                 strategy = st.selectbox("Estratégia", ["Long/Short", "Long Only"])
                 strategy_code = 'long_short' if strategy == "Long/Short" else 'long_only'
             
-            if st.button("🔄 Executar Backtest", use_container_width=True):
+            if st.button("Executar Backtest", use_container_width=True):
                 with st.spinner("Executando backtest..."):
                     # Pega melhor modelo
                     comparator = st.session_state['comparator']
@@ -354,7 +354,7 @@ def show():
                     st.session_state['backtest_results'] = backtest_results
                     st.session_state['backtester'] = backtester
                     
-                st.success("✅ Backtest concluído!")
+                st.success("Backtest concluído!")
             
             # Mostra resultados
             if 'backtester' in st.session_state:
@@ -363,7 +363,7 @@ def show():
                 # Métricas
                 metrics = backtester.calculate_metrics()
                 
-                st.markdown("### 💰 Resultados Financeiros")
+                st.markdown("### Resultados Financeiros")
                 
                 col1, col2, col3, col4 = st.columns(4)
                 
@@ -393,7 +393,7 @@ def show():
                 )
                 
                 # Gráficos
-                st.markdown("### 📊 Visualizações")
+                st.markdown("### Visualizações")
                 
                 fig_bt = backtester.plot_results(f"Backtest - {moeda_nome}")
                 st.plotly_chart(fig_bt, use_container_width=True)
@@ -406,22 +406,22 @@ def show():
                 
                 with col2:
                     # Relatório
-                    st.markdown("### 📄 Relatório Completo")
+                    st.markdown("### Relatório Completo")
                     st.text(backtester.generate_report())
     
     # ========== TAB 3: IMPACTO GEOPOLÍTICO ==========
     with tab3:
-        st.markdown("### 🌍 Correlação: Eventos Geopolíticos × Preços")
+        st.markdown("### Correlação: Eventos Geopolíticos x Preços")
         
         df_events = load_events(engine)
         df_prices = load_price_data(engine, moeda_id, limit=2000)
         
         if df_events.empty:
-            st.warning("⚠️ Sem eventos geopolíticos na base. Execute: python populate_geopolitical_events.py")
+            st.warning("Sem eventos geopolíticos na base. Execute: python populate_geopolitical_events.py")
         else:
-            st.info(f"📊 Analisando {len(df_events)} eventos geopolíticos")
+            st.info(f"Analisando {len(df_events)} eventos geopolíticos")
             
-            if st.button("🔍 Analisar Correlações", use_container_width=True):
+            if st.button("Analisar Correlações", use_container_width=True):
                 with st.spinner("Analisando impacto dos eventos..."):
                     analyzer = GeopoliticalAnalyzer()
                     
@@ -436,13 +436,13 @@ def show():
                     st.session_state['geo_analyzer'] = analyzer
                     st.session_state['impact_df'] = impact_df
                 
-                st.success("✅ Análise concluída!")
+                st.success("Análise concluída!")
             
             if 'geo_analyzer' in st.session_state:
                 analyzer = st.session_state['geo_analyzer']
                 
                 # Insights
-                st.markdown("### 💡 Insights Principais")
+                st.markdown("### Insights Principais")
                 st.text(analyzer.generate_insights_report())
                 
                 # Visualizações
@@ -466,14 +466,14 @@ def show():
     
     # ========== TAB 4: PREVISÃO AO VIVO ==========
     with tab4:
-        st.markdown("### 🎯 Faça uma Previsão Agora")
+        st.markdown("### Faça uma Previsão Agora")
         
         if 'comparator' not in st.session_state:
-            st.warning("⚠️ Treine os modelos primeiro")
+            st.warning("Treine os modelos primeiro")
         else:
-            st.info("💡 Use os dados mais recentes para prever o próximo período")
+            st.info("Use os dados mais recentes para prever o próximo período")
             
-            if st.button("🔮 Gerar Previsão", use_container_width=True):
+            if st.button("Gerar Previsão", use_container_width=True):
                 with st.spinner("Gerando previsão..."):
                     # Carrega dados recentes
                     df_prices = load_price_data(engine, moeda_id, limit=500)
@@ -498,10 +498,10 @@ def show():
                     # Média ensemble
                     ensemble_pred = np.mean(list(predictions.values()))
                     
-                    st.success("✅ Previsão gerada!")
+                    st.success("Previsão gerada!")
                     
                     # Mostra resultados
-                    st.markdown("### 📊 Previsões dos Modelos")
+                    st.markdown("### Previsões dos Modelos")
                     
                     cols = st.columns(len(predictions) + 1)
                     
@@ -515,7 +515,7 @@ def show():
                                 delta=f"{pred_pct:+.2f}%"
                             )
                         else:
-                            direction = "📈 ALTA" if pred > 0.5 else "📉 BAIXA"
+                            direction = "ALTA" if pred > 0.5 else "BAIXA"
                             confidence = max(pred, 1-pred) * 100
                             cols[i].metric(
                                 name,
@@ -528,15 +528,15 @@ def show():
                         ens_pct = ensemble_pred * 100
                         ens_price = last_price * (1 + ensemble_pred)
                         cols[-1].metric(
-                            "🎯 ENSEMBLE",
+                            "ENSEMBLE",
                             f"${ens_price:.2f}",
                             delta=f"{ens_pct:+.2f}%"
                         )
                     else:
-                        ens_dir = "📈 ALTA" if ensemble_pred > 0.5 else "📉 BAIXA"
+                        ens_dir = "ALTA" if ensemble_pred > 0.5 else "BAIXA"
                         ens_conf = max(ensemble_pred, 1-ensemble_pred) * 100
                         cols[-1].metric(
-                            "🎯 ENSEMBLE",
+                            "ENSEMBLE",
                             ens_dir,
                             delta=f"{ens_conf:.1f}% confiança"
                         )

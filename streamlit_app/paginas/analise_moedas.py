@@ -123,7 +123,7 @@ def carregar_ohlc(_engine, moeda_id: int, dt_ini: pd.Timestamp, dt_fim: pd.Times
 def _resample_ohlc(df: pd.DataFrame, regra: str) -> pd.DataFrame:
     if regra == "1h":
         return df
-    rule = "4H" if regra == "4h" else "1D"
+    rule = "4h" if regra == "4h" else "1D"
     dfi = df.set_index("timestamp")
     agg = {"open":"first","high":"max","low":"min","close":"last","volume":"sum"}
     out = dfi.resample(rule).agg(agg).dropna(subset=["open","high","low","close"]).reset_index()
@@ -177,7 +177,7 @@ def show():
 
     # Janela automática por intervalo
     WINDOWS = {"1h": pd.Timedelta(days=8), "4h": pd.Timedelta(days=60), "1d": pd.Timedelta(days=365)}
-    dt_fim = pd.Timestamp.now(tz="UTC").floor("H")
+    dt_fim = pd.Timestamp.now(tz="UTC").floor("h")
     dt_ini = dt_fim - WINDOWS[intervalo]
 
     df = carregar_ohlc(engine, moeda_id, dt_ini, dt_fim)
@@ -289,7 +289,7 @@ def show():
                 <p><b>1h:</b> <span style="color:{'#31fc94' if prev_1h >= preco_atual else '#ff6f6f'};">${prev_1h:,.2f}</span></p>
                 <p><b>24h:</b> <span style="color:{'#31fc94' if prev_24h >= preco_atual else '#ff6f6f'};">${prev_24h:,.2f}</span></p>
                 <p><b>7d:</b> <span style="color:{'#31fc94' if prev_7d >= preco_atual else '#ff6f6f'};">${prev_7d:,.2f}</span></p>
-                <p style="font-size:11px;color:#7c7f82;margin-top:10px;">⚠️ Previsões baseadas em tendência</p>
+                <p style="font-size:11px;color:#7c7f82;margin-top:10px;">Previsões baseadas em tendência</p>
             </div>
         """, unsafe_allow_html=True)
 

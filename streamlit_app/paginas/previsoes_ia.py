@@ -265,7 +265,7 @@ def show():
 
         mdl_dir = os.getenv("MODEL_DIR", os.path.join(os.getcwd(), "models")); os.makedirs(mdl_dir, exist_ok=True)
         mdl_path = os.path.join(mdl_dir, f"rf_moeda_{moeda_id}.joblib")
-        retrain = st.button("🔁 Treinar/Re-treinar Modelo")
+        retrain = st.button("Treinar / Re-treinar Modelo")
         if retrain or not os.path.isfile(mdl_path):
             with st.spinner("Treinando modelo..."):
                 model = train_rf(X_tr, y_tr, n_estimators=n_estimators)
@@ -297,7 +297,7 @@ def show():
 
         ultimo = float(series_hist.iloc[-1]); delta = prox_valor - ultimo
         pct = (delta/ultimo)*100 if ultimo else 0
-        tend = "↗︎ Alta" if delta>0 else ("↘︎ Baixa" if delta<0 else "→ Lateral")
+        tend = "Alta" if delta>0 else ("Baixa" if delta<0 else "Lateral")
         tend_color = "#37e39f" if delta>0 else ("#ff6b6b" if delta<0 else "#9db1cb")
         st.markdown(f"""
         <div style="background:{CARD_BG};padding:18px;border-radius:14px;border:1px solid {BORDER}">
@@ -336,11 +336,11 @@ def show():
 
         colb1, colb2 = st.columns(2)
         with colb1:
-            if st.button("💾 Salvar previsão"):
+            if st.button("Salvar previsão"):
                 inserted = salvar_previsao(engine, moeda_id, steps, fc, rmse, mae, r2)
                 st.success(f"Salvo {inserted} timestamp(s) previsto(s) para {moeda_label} ({horizonte}).")
         with colb2:
-            if st.button("🗂️ Ver previsões recentes"):
+            if st.button("Ver previsões recentes"):
                 df_prev = listar_previsoes_recentes(engine, moeda_id)
                 if df_prev.empty:
                     st.info("Ainda não há previsões salvas para esta moeda.")

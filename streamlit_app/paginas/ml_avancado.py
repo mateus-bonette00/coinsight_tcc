@@ -86,26 +86,26 @@ def show():
 
     st.set_page_config(page_title="ML Avançado - TCC", layout="wide", page_icon="🤖")
 
-    st.title("🤖 Sistema Avançado de Machine Learning")
+    st.title("Sistema Avançado de Machine Learning")
     st.markdown("### Análise Completa para Apresentação de TCC")
     st.markdown("---")
 
     # Info
     st.info("""
-    **🎓 Sistema Completo de ML para TCC**
+    **Sistema Completo de ML para TCC**
 
     Este dashboard apresenta:
-    - 📊 Comparação de múltiplos modelos (Random Forest, XGBoost, LightGBM)
-    - 🔄 Walk-Forward Analysis (backtesting robusto com re-treinamento)
-    - 🌍 Análise de impacto de eventos geopolíticos
-    - 🔍 Diagnóstico avançado de erros
-    - 📈 Previsões ensemble avançadas
+    - Comparação de múltiplos modelos (Random Forest, XGBoost, LightGBM)
+    - Walk-Forward Analysis (backtesting robusto com re-treinamento)
+    - Análise de impacto de eventos geopolíticos
+    - Diagnóstico avançado de erros
+    - Previsões ensemble avançadas
 
-    👈 Use a barra lateral para selecionar a moeda e começar!
+    Use a barra lateral para selecionar a moeda e começar!
     """)
 
     # Sidebar
-    st.sidebar.header("⚙️ Configurações")
+    st.sidebar.header("Configurações")
 
     moeda_map = {
         "Bitcoin (BTC)": 1,
@@ -122,16 +122,16 @@ def show():
 
     # Abas principais
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "📊 Comparação de Modelos",
-        "🔄 Walk-Forward Analysis",
-        "🌍 Impacto Geopolítico",
-        "🔍 Diagnóstico de Erros",
-        "📈 Previsões Avançadas"
+        "Comparação de Modelos",
+        "Walk-Forward Analysis",
+        "Impacto Geopolítico",
+        "Diagnóstico de Erros",
+        "Previsões Avançadas"
     ])
 
     # ==================== ABA 1: COMPARAÇÃO DE MODELOS ====================
     with tab1:
-        st.header("📊 Comparação de Modelos ML")
+        st.header("Comparação de Modelos ML")
         st.markdown("Compare Random Forest, XGBoost e LightGBM com features geopolíticas")
 
         col1, col2 = st.columns([2, 1])
@@ -142,7 +142,7 @@ def show():
             val_size = st.slider("Tamanho de Validação (%)", 5, 20, 10) / 100
             use_geopolitical = st.checkbox("Incluir Features Geopolíticas", value=True)
 
-            if st.button("🚀 Treinar e Comparar Modelos", type="primary"):
+            if st.button("Treinar e Comparar Modelos", type="primary"):
                 with st.spinner("Carregando dados..."):
                     df = load_data(moeda_id)
                     events_df = load_events() if use_geopolitical else None
@@ -154,9 +154,9 @@ def show():
                     # Prepara features
                     df_features, engine = prepare_features(df, events_df)
 
-                    st.success(f"✅ {len(df_features)} registros carregados")
+                    st.success(f"{len(df_features)} registros carregados")
                     if use_geopolitical and events_df is not None and len(events_df) > 0:
-                        st.info(f"🌍 {len(events_df)} eventos geopolíticos incluídos nas features")
+                        st.info(f"{len(events_df)} eventos geopolíticos incluídos nas features")
 
                 with st.spinner("Preparando dados..."):
                     # Split temporal
@@ -197,7 +197,7 @@ def show():
                     st.session_state['y_test'] = y_test
                     st.session_state['df_features'] = df_features
 
-                st.success("✅ Treinamento concluído!")
+                st.success("Treinamento concluído!")
 
         with col1:
             if 'results' in st.session_state:
@@ -245,7 +245,7 @@ def show():
 
                 # Melhor modelo
                 best_name, best_model = st.session_state['comparator'].get_best_model('mae')
-                st.success(f"🏆 Melhor Modelo: **{best_name}** (MAE: {results.loc[best_name, 'mae']:.6f})")
+                st.success(f"Melhor Modelo: **{best_name}** (MAE: {results.loc[best_name, 'mae']:.6f})")
 
                 # Feature Importance
                 st.subheader("Top 15 Features Mais Importantes")
@@ -274,7 +274,7 @@ def show():
 
     # ==================== ABA 2: WALK-FORWARD ANALYSIS ====================
     with tab2:
-        st.header("🔄 Walk-Forward Analysis")
+        st.header("Walk-Forward Analysis")
         st.markdown("*Backtesting robusto com re-treinamento periódico - simula cenário real de trading*")
 
         st.info("""
@@ -287,7 +287,7 @@ def show():
         4. Avalia performance ao longo do tempo
         """)
 
-        st.warning("⚠️ Esta análise requer modelos treinados. Execute primeiro a **Comparação de Modelos** (Aba 1)")
+        st.warning("Esta análise requer modelos treinados. Execute primeiro a **Comparação de Modelos** (Aba 1)")
 
         if 'comparator' in st.session_state:
             col1, col2 = st.columns([2, 1])
@@ -306,7 +306,7 @@ def show():
                 - Re-treina a cada {retrain_freq} dias
                 """)
 
-                if st.button("▶️ Executar Walk-Forward", type="primary"):
+                if st.button("Executar Walk-Forward", type="primary"):
                     with st.spinner("Executando Walk-Forward Analysis (pode levar alguns minutos)..."):
                         df_features = st.session_state['df_features']
 
@@ -340,7 +340,7 @@ def show():
                         st.session_state['wf_analyzer'] = wf_analyzer
                         st.session_state['wf_results'] = results_wf
 
-                    st.success("✅ Walk-Forward concluído!")
+                    st.success("Walk-Forward concluído!")
 
             with col1:
                 if 'wf_results' in st.session_state:
@@ -395,10 +395,10 @@ def show():
 
     # ==================== ABA 3: IMPACTO GEOPOLÍTICO ====================
     with tab3:
-        st.header("🌍 Análise de Impacto Geopolítico")
+        st.header("Análise de Impacto Geopolítico")
         st.markdown("Descubra como eventos mundiais afetam os preços das criptomoedas")
 
-        if st.button("🔍 Analisar Impacto", type="primary"):
+        if st.button("Analisar Impacto", type="primary"):
             with st.spinner("Carregando dados..."):
                 df = load_data(moeda_id)
                 events_df = load_events()
@@ -428,7 +428,7 @@ def show():
                 st.session_state['geo_analyzer'] = analyzer
                 st.session_state['impact_df'] = impact_df
 
-            st.success(f"✅ {len(impact_df)} eventos analisados!")
+            st.success(f"{len(impact_df)} eventos analisados!")
 
         if 'impact_df' in st.session_state:
             analyzer = st.session_state['geo_analyzer']
@@ -462,11 +462,11 @@ def show():
                 st.text(analyzer.generate_insights_report())
 
         else:
-            st.info("👆 Clique em 'Analisar Impacto' para começar")
+            st.info("Clique em 'Analisar Impacto' para começar")
 
     # ==================== ABA 4: DIAGNÓSTICO DE ERROS ====================
     with tab4:
-        st.header("🔍 Diagnóstico Avançado de Erros")
+        st.header("Diagnóstico Avançado de Erros")
         st.markdown("Análise estatística completa dos erros de previsão")
 
         if 'results' in st.session_state and 'X_test' in st.session_state:
@@ -581,11 +581,11 @@ def show():
                 st.metric("% de Outliers", f"{outlier_percentage:.2f}%")
 
             with col3:
-                threshold_status = "✅ Normal" if outlier_percentage < 5 else "⚠️ Alto"
+                threshold_status = "Normal" if outlier_percentage < 5 else "Alto"
                 st.metric("Status", threshold_status)
 
             # Relatório completo
-            with st.expander("📄 Relatório de Diagnóstico Completo"):
+            with st.expander("Relatório de Diagnóstico Completo"):
                 report = f"""
 ╔════════════════════════════════════════════════════════════╗
 ║           RELATÓRIO DE DIAGNÓSTICO - {best_name}
@@ -617,7 +617,7 @@ def show():
 
     # ==================== ABA 5: PREVISÕES AVANÇADAS ====================
     with tab5:
-        st.header("📈 Previsões Avançadas")
+        st.header("Previsões Avançadas")
         st.markdown("*Combine múltiplos modelos para previsões robustas (Ensemble)*")
 
         if 'comparator' in st.session_state:
@@ -680,7 +680,7 @@ def show():
                     )
 
                 with col_p3:
-                    direction = "📈 ALTA" if ensemble_return > 0 else "📉 BAIXA"
+                    direction = "ALTA" if ensemble_return > 0 else "BAIXA"
                     st.metric("Direção", direction)
 
                 # Tabela de previsões
@@ -739,7 +739,7 @@ def show():
     st.markdown("---")
     st.markdown("""
     <div style='text-align: center; color: #7f8c8d;'>
-        <p>🤖 Sistema Avançado de ML para Previsão de Criptomoedas - TCC 2024</p>
+        <p>Sistema Avançado de ML para Previsão de Criptomoedas - TCC 2024</p>
         <p>Desenvolvido com Streamlit, Scikit-learn, XGBoost, LightGBM e Plotly</p>
         <p><small>Features: 80+ indicadores técnicos + eventos geopolíticos | Modelos: RF, XGBoost, LightGBM</small></p>
     </div>

@@ -137,7 +137,7 @@ def show():
     cA, cB = st.columns(2)
     email = cA.toggle("Notificar por Email", value=False)
     push  = cB.toggle("Notificar Push",  value=False)
-    if st.button("➕ Criar Alerta", use_container_width=True):
+    if st.button("Criar Alerta", use_container_width=True):
         with engine.begin() as c:
             c.execute(text("""
                 INSERT INTO alertas(moeda_id,tipo,condicao,valor,horizonte_h,notificar_email,notificar_push)
@@ -148,7 +148,7 @@ def show():
         st.success("Alerta criado.")
 
     st.markdown("---")
-    if st.button("🔔 Avaliar alertas agora"):
+    if st.button("Avaliar alertas agora"):
         n = avaliar_alertas(engine)
         st.info(f"Avaliação concluída. Disparos gerados: {n}.")
 
