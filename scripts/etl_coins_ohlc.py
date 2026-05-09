@@ -158,7 +158,7 @@ def download_intraday_1h(ticker: str, since: pd.Timestamp | None) -> pd.DataFram
     - Se since is None => últimos 729d
     - Caso contrário, calcula a janela (since -> now) e cap 729d
     """
-    now_utc = pd.Timestamp.utcnow().floor("H")
+    now_utc = pd.Timestamp.now("UTC").floor("h")
     if since is None:
         period = f"{MAX_LOOKBACK_DAYS_1H}d"
     else:
